@@ -4,6 +4,9 @@ import DashboardHeader from '../components/DashboardHeader';
 import MetricsGrid from '../components/MetricsGrid';
 import ChartsSection from '../components/ChartsSection';
 import AdPerformanceTable from '../components/AdPerformanceTable';
+import TemplatesSection from '../components/TemplatesSection';
+import SchedulingSection from '../components/SchedulingSection';
+import AdSpendROI from '../components/AdSpendROI';
 
 const Index = () => {
   return (
@@ -18,6 +21,9 @@ const Index = () => {
           <MetricsGrid />
           <ChartsSection />
           <AdPerformanceTable />
+          <TemplatesSection />
+          <SchedulingSection />
+          <AdSpendROI />
         </main>
       </div>
     </div>
