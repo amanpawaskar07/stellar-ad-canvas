@@ -1,9 +1,31 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { BarChart3, TrendingUp, Calendar, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { exportDashboardReport } from '@/utils/exportUtils';
 
 const DashboardHeader = () => {
+  const [selectedDateRange, setSelectedDateRange] = useState('30');
+
+  const dateRanges = [
+    { value: '7', label: 'Last 7 Days' },
+    { value: '30', label: 'Last 30 Days' },
+    { value: '90', label: 'Last 90 Days' },
+    { value: '365', label: 'Last Year' },
+  ];
+
+  const handleExportReport = () => {
+    console.log(`Exporting report for ${selectedDateRange} days`);
+    exportDashboardReport(selectedDateRange);
+  };
+
   return (
     <header className="bg-slate-800/50 backdrop-blur-xl border-b border-slate-700/50">
       <div className="container mx-auto px-6 py-6">
@@ -23,11 +45,28 @@ const DashboardHeader = () => {
           </div>
           
           <div className="flex flex-wrap items-center gap-3">
-            <Button variant="outline" className="bg-slate-800/50 border-slate-600 text-slate-300 hover:bg-slate-700">
-              <Calendar className="w-4 h-4 mr-2" />
-              Last 30 Days
-            </Button>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Select value={selectedDateRange} onValueChange={setSelectedDateRange}>
+              <SelectTrigger className="w-40 bg-slate-800/50 border-slate-600 text-slate-300">
+                <Calendar className="w-4 h-4 mr-2" />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-800 border-slate-600">
+                {dateRanges.map((range) => (
+                  <SelectItem 
+                    key={range.value} 
+                    value={range.value}
+                    className="text-slate-300 focus:bg-slate-700 focus:text-white"
+                  >
+                    {range.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Button 
+              onClick={handleExportReport}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
               <Download className="w-4 h-4 mr-2" />
               Export Report
             </Button>
